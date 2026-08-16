@@ -1,7 +1,7 @@
 services:
   mc0:
     image: itzg/minecraft-server:latest
-    pull_policy: daily
+    pull_policy: always
     tty: true
     stdin_open: true
     restart: unless-stopped
@@ -14,9 +14,10 @@ services:
     volumes:
       # attach the relative directory 'data' to the container's /data path
       - ./data-creative:/data
-  mc1:
+
+  mc2:
     image: itzg/minecraft-server:latest
-    pull_policy: daily
+    pull_policy: always
     tty: true
     stdin_open: true
     restart: unless-stopped
@@ -24,8 +25,26 @@ services:
       - "25566:25565"
     environment:
       EULA: "TRUE"
-      MODE: "survival"
-      MOTD: "Glupeys (survival mode)"
+      MODE: "creative"
+      MOTD: "Glupeys (experimental)"
+      VERSION: "SNAPSHOT"
     volumes:
       # attach the relative directory 'data' to the container's /data path
-      - ./data-survival:/data
+      - ./data-experimental:/data
+
+  mc4:
+    image: itzg/minecraft-server:latest
+    pull_policy: always
+    tty: true
+    stdin_open: true
+    restart: unless-stopped
+    ports:
+      - "25568:25565"
+    environment:
+      EULA: "TRUE"
+      MODE: "survival"
+      MOTD: "Glupeys (survival snapshot)"
+      VERSION: "SNAPSHOT"
+    volumes:
+      # attach the relative directory 'data' to the container's /data path
+      - ./data-survival-snapshot:/data
